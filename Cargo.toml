@@ -1,8 +1,12 @@
 [package]
 name = "sudoku-pi"
+description = "Your new way to play Sudoku"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[package.metadata.bundle]
+identifier = "nl.couch-chilis.Sudoku-Pi"
 
 [lib]
 name = "sudoku_pi"

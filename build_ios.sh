@@ -1,5 +1,6 @@
 #/usr/bin/env bash
 
-cargo rustc --crate-type staticlib --lib --release --target aarch64-apple-ios
+cargo build --bin sudoku_pi --release --target aarch64-apple-ios
 
-cp target/aarch64-apple-ios/release/libsudoku_pi.a ios/Sudoku\ Pi/Frameworks/
+mkdir -p target/aarch64-apple-ios/release/bundle/ios/
+lipo target/aarch64-apple-ios/release/sudoku_pi -create -output target/aarch64-apple-ios/release/bundle/ios/sudoku-pi.app

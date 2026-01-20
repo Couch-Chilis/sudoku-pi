@@ -177,27 +177,6 @@ pub fn main() {
     run(ScreenSizing::default(), ZoomFactor::default())
 }
 
-#[no_mangle]
-#[cfg(target_os = "ios")]
-extern "C" fn run_with_fixed_sizes(
-    width: f64,
-    height: f64,
-    scale: f64,
-    native_scale: f64,
-    top_padding: i32,
-) {
-    let scale = (scale / native_scale) as f32;
-    println!("Starting at size {width}x{height} (scale={scale}, top_padding={top_padding}px)");
-    run(
-        ScreenSizing {
-            width: width as f32,
-            height: height as f32,
-            top_padding,
-        },
-        ZoomFactor { x: scale, y: scale },
-    )
-}
-
 /// Plugin that disables all the asset loaders, since we load all assets manually.
 struct AssetConfiguratorPlugin {}
 
@@ -245,7 +224,6 @@ fn run(screen_sizing: ScreenSizing, zoom_factor: ZoomFactor) {
             Update,
             (
                 on_escape,
-                #[cfg(not(target_os = "ios"))]
                 on_resize,
                 #[cfg(debug_assertions)]
                 on_keyboard_input,
@@ -431,7 +409,6 @@ fn on_screen_change(
     }
 }
 
-#[cfg(not(target_os = "ios"))]
 fn on_resize(
     mut commands: Commands,
     mut window_resizes: MessageReader<WindowResized>,
